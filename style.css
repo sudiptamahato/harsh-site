@@ -1,0 +1,862 @@
+:root {
+    --glow-color-1: hsl(217, 100%, 50%);
+    --glow-color-2: hsl(287, 100%, 50%);
+    --glow-color-3: hsl(180, 100%, 50%);
+    --glow-color-4: hsl(340, 100%, 50%);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000000;
+    color: #e5e7eb;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body.is-transitioning {
+    pointer-events: none;
+}
+
+/* --- Mouse Follower Glow --- */
+#mouse-follower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.15), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.05s linear;
+}
+
+/* --- Animated Mesh Gradient Background --- */
+.mesh-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+    background: #050510;
+}
+
+.mesh-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    /* Reduced blur slightly for more defined color pops */
+    opacity: 0.6;
+    animation: mesh-move 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    mix-blend-mode: screen;
+    /* Vibrant color mixing */
+}
+
+/* Vibrant Orbs */
+.shape1 {
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, #4f46e5, transparent 70%);
+    /* Indigo */
+    top: -10%;
+    left: -10%;
+    animation-duration: 25s;
+}
+
+.shape2 {
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, #9333ea, transparent 70%);
+    /* Purple */
+    bottom: -10%;
+    right: -10%;
+    animation-duration: 30s;
+    animation-delay: -5s;
+}
+
+.shape3 {
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, #db2777, transparent 70%);
+    /* Pink/Rose */
+    top: 40%;
+    left: 40%;
+    animation-duration: 22s;
+    animation-delay: -10s;
+}
+
+.shape4 {
+    width: 45vw;
+    height: 45vw;
+    background: radial-gradient(circle, #0d9488, transparent 70%);
+    /* Teal */
+    bottom: 10%;
+    left: 10%;
+    animation-duration: 28s;
+    animation-delay: -15s;
+}
+
+@keyframes mesh-move {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+/* --- Interactive Card Tilting --- */
+.interactive-card {
+    perspective: 1000px;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+    transform-style: preserve-3d;
+}
+
+.interactive-card:hover {
+    z-index: 10;
+}
+
+/* --- Banner 3D Tilt Effect --- */
+.banner-tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+}
+
+.banner-card-container {
+    perspective: 2000px;
+}
+
+/* Banner Content Styling */
+.banner-tilt-card h2 {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.banner-tilt-card p {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Liquid Glass Card Style --- */
+/* --- Liquid Glass Card Style --- */
+/* --- Classic Glass Card (For Static Sections) --- */
+.glass-card {
+    background: rgba(15, 15, 20, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    transform-style: preserve-3d;
+}
+
+/* --- iOS Liquid Glass Card (For Content Items) --- */
+/* --- iOS Liquid Glass Card (For Content Items) --- */
+.ios-glass-card {
+    background: linear-gradient(135deg, rgba(15, 15, 20, 0.6) 0%, rgba(10, 10, 15, 0.7) 100%);
+    /* Much darker, nearly opaque */
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Base border */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    /* Brighter top border for "light source" */
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    /* Inner top highlight */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    transform-style: preserve-3d;
+}
+
+/* Glass Shine (Top Gradient) */
+.ios-glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    /* Top section only */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Hover Sheen / Ripple Effect */
+.ios-glass-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent);
+    transform: skewX(-25deg);
+    transition: left 0.7s;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.ios-glass-card:hover::after {
+    left: 200%;
+    transition: left 0.7s ease-in-out;
+}
+
+.ios-glass-card:hover {
+    background: linear-gradient(135deg, rgba(25, 25, 30, 0.95) 0%, rgba(15, 15, 20, 0.98) 100%);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+    /* Brighter inner highlight on hover */
+    transform: translateY(-2px);
+}
+
+/* --- Ripple Effect (Click) --- */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.15);
+    /* Sharper ripple */
+    pointer-events: none;
+    z-index: 5;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* --- Heart Burst Animation --- */
+@keyframes heartBurst {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.heart-burst {
+    animation: heartBurst 0.4s ease-out;
+}
+
+/* --- Toast Notifications --- */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast {
+    background: rgba(15, 15, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 12px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+    animation: toastSlideIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    width: 300px;
+    /* Fixed width for consistency */
+}
+
+.toast.removing {
+    animation: toastSlideOut 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.toast-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.toast-success .toast-icon {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.toast-error .toast-icon {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.toast-info .toast-icon {
+    background: rgba(99, 102, 241, 0.2);
+    color: #6366f1;
+}
+
+@keyframes toastSlideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toastSlideOut {
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.glass-card:hover {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 20px 40px -5px rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(400px circle at var(--x) var(--y), rgba(124, 58, 237, 0.3), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.glass-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+/* --- Gradient Text --- */
+.gradient-text {
+    background-image: linear-gradient(90deg, #a78bfa, #f472b6, #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: gradient-flow 5s linear infinite;
+}
+
+@keyframes gradient-flow {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* --- Enhanced Gradient Button --- */
+.gradient-btn {
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(to right, #6d28d9, #9333ea, #be185d);
+    background-size: 200% auto;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 4px 15px 0 rgba(196, 125, 243, 0.4);
+}
+
+.gradient-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 80%);
+    transform: skewX(-25deg);
+    transition: left 0.8s ease-in-out;
+}
+
+.gradient-btn:hover {
+    background-position: right center;
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px 0 rgba(196, 125, 243, 0.7);
+}
+
+.gradient-btn:hover::before {
+    left: 150%;
+}
+
+/* Particle effect for buttons */
+.particle {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation: fly 0.9s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes fly {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(0) translate(var(--x), var(--y));
+        opacity: 0;
+    }
+}
+
+/* --- Page Transition Animations --- */
+.page-view {
+    will-change: transform, opacity;
+    animation: slideIn 0.5s ease-out forwards;
+    position: relative;
+    z-index: 1;
+}
+
+.page-view.hidden {
+    display: none;
+}
+
+body.is-leaving .page-view:not(.hidden) {
+    animation: fadeOut 0.4s ease-in forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: 0.1s;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+#back-to-top {
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #6d28d9, #be185d);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #8b5cf6, #db2777);
+}
+
+/* Donation Popup Styles */
+#donation-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#donation-popup.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.donation-content {
+    animation: pulse-border 1.5s infinite alternate;
+}
+
+@keyframes pulse-border {
+    from {
+        box-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+    }
+
+    to {
+        box-shadow: 0 0 20px rgba(147, 51, 234, 1);
+    }
+}
+
+/* --- Search Result Highlight (Premium Spotlight) --- */
+@keyframes highlightPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0), 0 0 0 0 rgba(139, 92, 246, 0);
+        border-color: rgba(255, 255, 255, 0.1);
+        transform: scale(1);
+        backdrop-filter: brightness(1);
+    }
+
+    10% {
+        box-shadow:
+            0 0 20px rgba(99, 102, 241, 0.6),
+            /* Inner Indigo Glow */
+            0 0 40px rgba(139, 92, 246, 0.4),
+            /* Outer Purple Ambient */
+            inset 0 0 10px rgba(255, 255, 255, 0.1);
+        /* Inner Rim */
+        border-color: #818cf8;
+        transform: scale(1.02);
+        backdrop-filter: brightness(1.3);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px rgba(99, 102, 241, 0.8),
+            0 0 60px rgba(139, 92, 246, 0.6),
+            inset 0 0 20px rgba(255, 255, 255, 0.2);
+        border-color: #a78bfa;
+        transform: scale(1.03);
+        backdrop-filter: brightness(1.5);
+        /* Max Brightness */
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0), 0 0 0 0 rgba(139, 92, 246, 0);
+        border-color: rgba(255, 255, 255, 0.1);
+        transform: scale(1);
+        backdrop-filter: brightness(1);
+    }
+}
+
+.highlight-pulse {
+    animation: highlightPulse 2.5s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 50;
+    position: relative;
+    border-color: #818cf8 !important;
+    /* Force border color during anim */
+}
+
+.plugin-highlight-box {
+    animation: highlightPulse 2.5s cubic-bezier(0.22, 1, 0.36, 1);
+    background: linear-gradient(145deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border-radius: 0.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- Professional Modal Pop-In Animation --- */
+@keyframes modalPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* --- Improved Loading Page Styles --- */
+body.no-scroll {
+    overflow: hidden;
+}
+
+#preloader {
+    background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000000 100%);
+    overflow: hidden;
+}
+
+/* Light Leaks Background */
+.light-leak {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: leakMove 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    mix-blend-mode: screen;
+}
+
+.leak-1 {
+    top: -100px;
+    left: -100px;
+    background: radial-gradient(circle, #4f46e5, transparent 70%);
+    /* Indigo */
+    animation-duration: 12s;
+}
+
+.leak-2 {
+    bottom: -100px;
+    right: -100px;
+    background: radial-gradient(circle, #db2777, transparent 70%);
+    /* Pink */
+    animation-duration: 15s;
+    animation-delay: -2s;
+}
+
+.leak-3 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #0d9488, transparent 70%);
+    /* Teal */
+    width: 400px;
+    height: 400px;
+    animation-duration: 18s;
+    opacity: 0.2;
+}
+
+@keyframes leakMove {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, -20px) scale(1.1);
+    }
+}
+
+/* --- Super Glow Banner Effect --- */
+.banner-super-glow {
+    position: relative;
+    z-index: 1;
+}
+
+.banner-super-glow::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(45deg,
+            var(--glow-color-1),
+            var(--glow-color-2),
+            var(--glow-color-3),
+            var(--glow-color-4));
+    z-index: -1;
+    border-radius: 2.6rem;
+    filter: blur(25px);
+    opacity: 0.6;
+    animation: banner-pulse 8s linear infinite;
+    transition: opacity 0.5s ease;
+}
+
+.banner-super-glow::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(45deg,
+            rgba(255, 255, 255, 0.4),
+            transparent 40%,
+            transparent 60%,
+            rgba(255, 255, 255, 0.4));
+    z-index: 10;
+    border-radius: 2.5rem;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    opacity: 0.5;
+}
+
+@keyframes banner-pulse {
+    0% {
+        filter: blur(25px);
+        opacity: 0.6;
+        background-position: 0% 50%;
+    }
+
+    50% {
+        filter: blur(35px);
+        opacity: 0.8;
+        background-position: 100% 50%;
+    }
+
+    100% {
+        filter: blur(25px);
+        opacity: 0.6;
+        background-position: 0% 50%;
+    }
+}
+
+/* === Enhanced Modal Animations === */
+
+/* Modal Backdrop Fade In/Out */
+@keyframes modalBackdropIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+
+    to {
+        opacity: 1;
+        backdrop-filter: blur(64px);
+    }
+}
+
+@keyframes modalBackdropOut {
+    from {
+        opacity: 1;
+        backdrop-filter: blur(64px);
+    }
+
+    to {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+}
+
+/* Modal Card Scale + Slide In */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.85) translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Modal Card Scale + Slide Out */
+@keyframes modalSlideOut {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+}
+
+/* Apply animations to modal */
+.modal-backdrop-in {
+    animation: modalBackdropIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-backdrop-out {
+    animation: modalBackdropOut 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.modal-content-in {
+    animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-content-out {
+    animation: modalSlideOut 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Stagger animation for modal children */
+@keyframes modalChildFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-child-animate {
+    animation: modalChildFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-child-animate:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.modal-child-animate:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.modal-child-animate:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.modal-child-animate:nth-child(4) {
+    animation-delay: 0.25s;
+}

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - HarshEdits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* ___ Premium Background Animation ___ */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+            animation: pulse-bg 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-bg {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 20s infinite ease-in-out;
+            opacity: 0.4;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #6d28d9;
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #db2777;
+            bottom: 10%;
+            right: -5%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background: #4f46e5;
+            top: 40%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -50px) rotate(10deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(-5deg);
+            }
+        }
+
+        /* ___ Glass Card Premium ___ */
+        .glass-card {
+            background: rgba(20, 20, 25, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 0 20px rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.03),
+                    transparent);
+            transform: skewX(-15deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+            transition: 0.7s;
+        }
+
+        /* ___ Input Styling ___ */
+        .input-group {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .input-field {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field:focus {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .input-icon {
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus~.input-icon {
+            color: #a855f7;
+        }
+
+        /* ___ Buttons ___ */
+        .gradient-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .gradient-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #db2777 0%, #7c3aed 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .gradient-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .gradient-btn:hover::after {
+            opacity: 1;
+        }
+
+        .gradient-btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .tab-btn {
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .tab-btn.active {
+            opacity: 1;
+            color: #fff;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #a855f7;
+            box-shadow: 0 0 10px #a855f7;
+        }
+
+        /* ___ Animations ___ */
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth Form Switching */
+        .form-container {
+            transition: all 0.4s ease-in-out;
+        }
+
+        .typing-text {
+            border-right: 2px solid #a855f7;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #a855f7
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4 relative font-sans">
+
+    <!-- Background Elements -->
+    <div class="animated-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Main Container -->
+    <div class="w-full max-w-[420px] relative z-10">
+
+        <!-- Logo Section -->
+        <div class="text-center mb-10 fade-in-up">
+            <a href="index.html" class="inline-block group cursor-pointer">
+                <h1 class="text-5xl font-bold tracking-tighter mb-2 group-hover:scale-105 transition-transform duration-300"
+                    style="text-shadow: 0 0 30px rgba(168,85,247,0.3);">
+                    Harsh<span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Edits</span>
+                </h1>
+            </a>
+            <p class="text-gray-400 text-sm font-light tracking-wider uppercase opacity-80">Welcome to the Ultimate
+                Editing Hub</p>
+        </div>
+
+        <!-- Auth Card -->
+        <div class="glass-card rounded-3xl p-8 fade-in-up delay-100">
+
+            <!-- Tabs -->
+            <div class="flex mb-8 border-b border-gray-700/30 relative">
+                <button id="tab-login" onclick="switchTab('login')"
+                    class="tab-btn w-1/2 pb-4 text-center font-medium active hover:text-white">
+                    Sign In
+                </button>
+                <button id="tab-signup" onclick="switchTab('signup')"
+                    class="tab-btn w-1/2 pb-4 text-center font-medium hover:text-white">
+                    Create Account
+                </button>
+            </div>
+
+            <!-- Error Message -->
+            <div id="auth-error"
+                class="hidden bg-red-500/10 border border-red-500/20 text-red-200 px-4 py-3 rounded-xl mb-6 text-sm flex items-center gap-3 animate-pulse">
+                <i class="fas fa-exclamation-circle text-red-400 text-lg"></i>
+                <span id="error-text">Something went wrong</span>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="space-y-6 form-container opacity-100 transform translate-x-0">
+                <div class="input-group">
+                    <label
+                        class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2 ml-1">Email</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 input-icon z-10"></i>
+                        <input type="email" id="login-email" required
+                            class="input-field w-full rounded-2xl py-4 pl-12 pr-4 text-white placeholder-gray-600 outline-none"
+                            placeholder="name@example.com">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label
+                        class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2 ml-1">Password</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 input-icon z-10"></i>
+                        <input type="password" id="login-password" required
+                            class="input-field w-full rounded-2xl py-4 pl-12 pr-12 text-white placeholder-gray-600 outline-none"
+                            placeholder="••••••••">
+                        <button type="button" onclick="togglePassword('login-password', this)"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors p-2 z-10">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-end mt-2">
+                        <button type="button" onclick="showForgotPassword()"
+                            class="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors">Forgot
+                            Password?</button>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" id="btn-login"
+                        class="w-full gradient-btn py-4 rounded-xl font-bold tracking-wide text-white text-lg">
+                        <span>Sign In</span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="space-y-5 form-container hidden opacity-0 transform translate-x-10">
+                <div class="input-group">
+                    <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2 ml-1">Full
+                        Name</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 input-icon z-10"></i>
+                        <input type="text" id="signup-name" required
+                            class="input-field w-full rounded-2xl py-4 pl-12 pr-4 text-white placeholder-gray-600 outline-none"
+                            placeholder="Your Name">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label
+                        class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2 ml-1">Email</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 input-icon z-10"></i>
+                        <input type="email" id="signup-email" required
+                            class="input-field w-full rounded-2xl py-4 pl-12 pr-4 text-white placeholder-gray-600 outline-none"
+                            placeholder="name@example.com">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label
+                        class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2 ml-1">Password</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 input-icon z-10"></i>
+                        <input type="password" id="signup-password" required minlength="6"
+                            class="input-field w-full rounded-2xl py-4 pl-12 pr-12 text-white placeholder-gray-600 outline-none"
+                            placeholder="Min 6 characters">
+                        <button type="button" onclick="togglePassword('signup-password', this)"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors p-2 z-10">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2 ml-1">Confirm
+                        Password</label>
+                    <div class="relative">
+                        <i class="fas fa-check-circle absolute left-4 top-1/2 -translate-y-1/2 input-icon z-10"></i>
+                        <input type="password" id="signup-confirm-password" required
+                            class="input-field w-full rounded-2xl py-4 pl-12 pr-12 text-white placeholder-gray-600 outline-none"
+                            placeholder="Re-enter password">
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" id="btn-signup"
+                        class="w-full gradient-btn py-4 rounded-xl font-bold tracking-wide text-white text-lg">
+                        <span>Create Account</span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Loading Overlay -->
+            <div id="loading-overlay"
+                class="absolute inset-0 bg-[#050505]/80 backdrop-blur-md flex flex-col items-center justify-center z-50 hidden opacity-0 transition-all duration-300 rounded-3xl">
+                <div class="relative">
+                    <div class="w-16 h-16 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin">
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="fas fa-bolt text-purple-500 text-xl animate-pulse"></i>
+                    </div>
+                </div>
+                <div class="text-white font-medium tracking-wide mt-4 animate-pulse" id="loading-text">Processing...
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-8 fade-in-up delay-200">
+            <p class="text-gray-600 text-sm">
+                &copy; <span id="current-year"></span> HarshEdits. All rights reserved.
+            </p>
+            <p class="text-xs text-gray-700 mt-2">Designed & Developed by <span
+                    class="text-gray-500 font-medium">Sudipta Mahato</span></p>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+            onclick="closeForgotPasswordModal()"></div>
+        <div
+            class="relative bg-[#111116] border border-white/10 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all scale-100 p-6 text-center space-y-4">
+            <div class="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                <i class="fas fa-key text-purple-400 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white"></h3>
+            <p id="forgot-password-text" class="text-gray-400 text-sm leading-relaxed">
+                Loading instructions...
+            </p>
+            <div class="pt-4">
+                <a id="forgot-password-btn" href="#" target="_blank"
+                    class="inline-flex items-center justify-center w-full gradient-btn py-3 rounded-xl font-bold text-white tracking-wide hover:opacity-90 transition-opacity">
+                    <span>Contact Admin</span>
+                </a>
+            </div>
+            <button onclick="closeForgotPasswordModal()"
+                class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <!-- Auth Logic -->
+    <script src="auth.js"></script>
+
+    <script>
+        // Enhanced UI Interactions
+        function switchTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+            const errorDiv = document.getElementById('auth-error');
+
+            errorDiv.classList.add('hidden');
+
+            if (tab === 'login') {
+                // Animate Out Signup
+                signupForm.style.opacity = '0';
+                signupForm.style.transform = 'translateX(20px)';
+
+                setTimeout(() => {
+                    signupForm.classList.add('hidden');
+                    loginForm.classList.remove('hidden');
+
+                    // Animate In Login
+                    requestAnimationFrame(() => {
+                        loginForm.style.opacity = '1';
+                        loginForm.style.transform = 'translateX(0)';
+                    });
+                }, 300);
+
+                tabLogin.classList.add('active');
+                tabSignup.classList.remove('active');
+            } else {
+                // Animate Out Login
+                loginForm.style.opacity = '0';
+                loginForm.style.transform = 'translateX(-20px)';
+
+                setTimeout(() => {
+                    loginForm.classList.add('hidden');
+                    signupForm.classList.remove('hidden');
+
+                    // Animate In Signup
+                    requestAnimationFrame(() => {
+                        signupForm.style.opacity = '1';
+                        signupForm.style.transform = 'translateX(0)';
+                    });
+                }, 300);
+
+                tabLogin.classList.remove('active');
+                tabSignup.classList.add('active');
+            }
+        }
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+
+            // Add subtle animation to icon
+            icon.style.transform = 'scale(0.8)';
+            setTimeout(() => icon.style.transform = 'scale(1)', 150);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash text-purple-400';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        // Initialize based on URL hash or default to Login
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set dynamic year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            const hash = window.location.hash.substring(1);
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            // Set initial state for animations
+            loginForm.style.transition = 'all 0.3s ease-in-out';
+            signupForm.style.transition = 'all 0.3s ease-in-out';
+
+            if (hash === 'signup') {
+                // Quick set for initial load without animation delay
+                switchTab('signup');
+            } else {
+                switchTab('login');
+            }
+        });
+
+        // --- Admin DB Connection for Settings ---
+        const adminConfig = {
+            apiKey: "AIzaSyApFbiZsRv8p-w6vbdc8Iv_DtWld9POB6k",
+            authDomain: "softweres-a65a3.firebaseapp.com",
+            databaseURL: "https://softweres-a65a3-default-rtdb.firebaseio.com",
+            projectId: "softweres-a65a3",
+            storageBucket: "softweres-a65a3.firebasestorage.app",
+            messagingSenderId: "1022515432242",
+            appId: "1:1022515432242:web:33376a8e48a8035639e52b",
+            measurementId: "G-0DKL94BL4H"
+        };
+        let adminApp;
+        try {
+            adminApp = firebase.initializeApp(adminConfig, 'adminApp');
+        } catch (e) {
+            adminApp = firebase.app('adminApp');
+        }
+        const adminDb = adminApp.database();
+
+        // Forgot Password Logic
+        function showForgotPassword() {
+            const modal = document.getElementById('forgot-password-modal');
+            const textEl = document.getElementById('forgot-password-text');
+            const btnEl = document.getElementById('forgot-password-btn');
+            const titleEl = modal.querySelector('h3');
+            const btnSpan = btnEl.querySelector('span');
+
+            modal.classList.remove('hidden');
+            textEl.textContent = "Loading...";
+
+            // Fetch settings from Admin DB (Config 1)
+            adminDb.ref('settings/forgotPassword').once('value').then(snapshot => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    textEl.textContent = data.text || "Please contact support to reset your password.";
+                    if (data.title) titleEl.textContent = data.title;
+                    if (data.buttonText) btnSpan.textContent = data.buttonText;
+
+                    btnEl.href = data.buttonUrl || "#";
+                    if (!data.buttonUrl) btnEl.classList.add('hidden');
+                    else btnEl.classList.remove('hidden');
+                } else {
+                    textEl.textContent = "Please contact admin directly.";
+                    btnEl.classList.add('hidden');
+                }
+            }).catch(err => {
+                console.error("Error loading settings:", err);
+                textEl.textContent = "Error loading instructions. Please contact support.";
+            });
+        }
+
+        function closeForgotPasswordModal() {
+            document.getElementById('forgot-password-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+
+</html>
